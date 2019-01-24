@@ -22,6 +22,7 @@ object DeviceDataProducer {
 
   final case class DataRecord(deviceId: Int, temperature: Double, rpm: Int, timestamp: Long = Instant.now().toEpochMilli)
 
+  val BootstrapServers = "172.29.15.246:9092"
 
 }
 
@@ -36,7 +37,7 @@ final class DeviceDataProducer extends Actor with ActorLogging {
 
   val config = context.system.settings.config.getConfig("akka.kafka.producer")
   val producerSettings = ProducerSettings(config, new StringSerializer, new StringSerializer)
-      .withBootstrapServers("localhost:9092")
+      .withBootstrapServers(BootstrapServers)
 
 
   val done = Source(1 to 100000)
